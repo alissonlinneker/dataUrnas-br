@@ -13,9 +13,14 @@ jobs:
           fetch-depth: 0
           lfs: true
 
+      - name: Install Git LFS and track large files
+        run: |
+          git lfs install
+          git lfs track "data/parquet/*.parquet"
+          git add .gitattributes
+
       - name: Add HF Space metadata
         run: |
-          # Criar README temporario com frontmatter do HF Space
           cat > /tmp/hf_readme.md << 'FRONTMATTER'
           ---
           title: DataUrnas-BR
@@ -28,7 +33,6 @@ jobs:
           ---
 
           FRONTMATTER
-          # Concatenar com o README do projeto
           cat README.md >> /tmp/hf_readme.md
           mv /tmp/hf_readme.md README.md
 
@@ -40,6 +44,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add README.md
-          git commit -m "Add HF Space metadata" --allow-empty
+          git add -A
+          git commit -m "Add HF Space metadata and LFS tracking" --allow-empty
           git push --force https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/spaces/${HF_USERNAME}/${SPACE_NAME} main
