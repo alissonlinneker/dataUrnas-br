@@ -21,7 +21,7 @@ jobs:
           # Criar repo limpo para HF (evita histórico com blobs grandes)
           mkdir /tmp/hf-deploy
           cd /tmp/hf-deploy
-          git init
+          git init -b main
           git lfs install
           git lfs track "data/parquet/*.parquet"
 
@@ -30,18 +30,7 @@ jobs:
           cp $GITHUB_WORKSPACE/.gitignore . 2>/dev/null || true
 
           # Adicionar frontmatter do HF Space ao README
-          cat > /tmp/hf_readme.md << 'FRONTMATTER'
----
-title: DataUrnas-BR
-emoji: 🗳️
-colorFrom: green
-colorTo: blue
-sdk: docker
-pinned: false
-license: mit
----
-
-FRONTMATTER
+          printf '%s\n' '---' 'title: DataUrnas-BR' 'emoji: 🗳️' 'colorFrom: green' 'colorTo: blue' 'sdk: docker' 'pinned: false' 'license: mit' '---' '' > /tmp/hf_readme.md
           cat README.md >> /tmp/hf_readme.md
           mv /tmp/hf_readme.md README.md
 
