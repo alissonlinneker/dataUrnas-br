@@ -9,12 +9,10 @@ COPY . .
 
 RUN python scripts/build_db.py
 
-EXPOSE 8501
-
-HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
+EXPOSE 7860
 
 CMD ["streamlit", "run", "src/dataurnas/dashboard/app.py", \
-     "--server.port=8501", \
+     "--server.port=7860", \
      "--server.address=0.0.0.0", \
      "--server.headless=true", \
      "--browser.gatherUsageStats=false"]
