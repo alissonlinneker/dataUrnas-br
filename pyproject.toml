@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dataurnas-br"
+version = "0.1.0"
+description = "Auditoria independente dos dados eleitorais brasileiros"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[project.scripts]
+dataurnas = "dataurnas.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

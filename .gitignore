@@ -1,0 +1,50 @@
+# Data (banco compilado e dados brutos)
+data/raw/
+data/json/
+data/db/
+*.bu
+*.rdv
+*.logjez
+*.imgbu
+*.vscmr
+*.vsc
+*.dat
+*.jez
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Ambiente
+.env
+.venv/
+venv/
+env/
+
+# IDE e ferramentas locais
+.vscode/
+.idea/
+.claude/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Temporarios
+test_*.py
+scripts/features/
+*.log
+nohup.out
+CLAUDE.md
+ARCHITECTURE.md

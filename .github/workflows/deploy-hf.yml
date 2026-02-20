@@ -1,0 +1,45 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sync-to-hf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Add HF Space metadata
+        run: |
+          # Criar README temporario com frontmatter do HF Space
+          cat > /tmp/hf_readme.md << 'FRONTMATTER'
+          ---
+          title: DataUrnas-BR
+          emoji: 🗳️
+          colorFrom: green
+          colorTo: blue
+          sdk: docker
+          pinned: false
+          license: mit
+          ---
+
+          FRONTMATTER
+          # Concatenar com o README do projeto
+          cat README.md >> /tmp/hf_readme.md
+          mv /tmp/hf_readme.md README.md
+
+      - name: Push to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_USERNAME: ${{ vars.HF_USERNAME }}
+          SPACE_NAME: ${{ vars.SPACE_NAME }}
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          git commit -m "Add HF Space metadata" --allow-empty
+          git push --force https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/spaces/${HF_USERNAME}/${SPACE_NAME} main
